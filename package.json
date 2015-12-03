@@ -1,0 +1,12 @@
+{
+  "name": "syncanoaffirmations",
+  "version": "0.0.1",
+  "description": "A demo app to highlight the features of Syncano.",
+  "main": "index.js",
+  "author": "Patrick Catanzariti",
+  "dependencies": {
+    "express": "^4.13.3",
+    "body-parser": "^1.14.1",
+    "request": "^2.67.0"
+  }
+}
