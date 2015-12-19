@@ -11,28 +11,24 @@ stripe.customers.create({
   plan: "affirmationsubscription",
   email: email
 }, function(err, customer) {
+  if (err) {console.log(err); return;}
   account.instance('bold-rain-5584').user().list()
-  .then(function(res){
-      console.log(res);
-      
-      _.each(res.objects, function(user) {
-          if (user.username == email) {
-              console.log("USER:");
-              console.log(user);
-              
-              var details = {
-                "subscribed": true,
-                "stripe_id": customer.id,
-                "subscription_id": customer.subscriptions.data[0].id
-              };
-              
-              account.instance('bold-rain-5584').class('user_profile').dataobject(user.profile.id).update(details, function(err, res) {
-                  console.log(customer.id + ',' + customer.subscriptions.data[0].id);
-              });
-          }
-      });
-  })
-  .catch(function(err) {
-      console.log("Error! ", err);
-  });
+    .then(function(res){
+        _.each(res.objects, function(user) {
+            if (user.username == email) {
+                var details = {
+                  "subscribed": true,
+                  "stripe_id": customer.id,
+                  "subscription_id": customer.subscriptions.data[0].id
+                };
+                
+                account.instance('bold-rain-5584').class('user_profile').dataobject(user.profile.id).update(details, function(err, res) {
+                    console.log(customer.id + ',' + customer.subscriptions.data[0].id);
+                });
+            }
+        });
+    })
+    .catch(function(err) {
+        console.log("Error! ", err);
+    });
 });
